@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const typeSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -7,9 +6,14 @@ const typeSchema = new mongoose.Schema({
   },
   subtype: [
     {
-      id: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'types'
     },
   ],
+  rowmatrials:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'RowMaterials',
+  }]
 });
 
 const Type = mongoose.model("types", typeSchema);
