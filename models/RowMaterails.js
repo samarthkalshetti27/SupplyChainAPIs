@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const RowMaterail = mongoose.model(
+const RowMaterails = mongoose.model(
   "RowMaterials",
   new mongoose.Schema({
     name: {
@@ -14,4 +14,4 @@ const RowMaterail = mongoose.model(
   })
 );
 
-module.exports = RowMaterail;
+module.exports = RowMaterails;

@@ -2,6 +2,7 @@ const User = require("../models/User");
 const RowMaterail = require("../models/RowMaterails");
 const express = require("express");
 const Types = require("../models/Types");
+const Resource = require("../models/Resource");
 module.exports.addUser = async (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (err) return res.status(404).json({ error: err });
@@ -32,8 +33,22 @@ module.exports.addType = async (req, res) => {
   });
 };
 
+module.exports.addResource = async (req, res) => {
+  Resource.create(req.body, (err, user) => {
+    if (err) return res.status(404).json({ error: err });
+    if (user) return res.status(200).json({ success: "success" });
+  });
+};
+
+module.exports.getResource = async (req, res) => {
+  Resource.find({}, (err, data) => {
+    if (err) return res.status(err).json({ err: err });
+    if (data) return res.status(200).json(data);
+  });
+};
+
 module.exports.getAll = async (req, res) => {
-  Types.findOne()
+  Types.find({})
     .populate("rowmatrials")
     .populate("subtype")
     .exec((err, data) => {
