@@ -33,12 +33,14 @@ module.exports.addType = async (req, res) => {
 };
 
 module.exports.getAll = async (req, res) => {
-  Types.findOne().populate("rowmatrials").populate('subtype')
+  Types.findOne()
+    .populate("rowmatrials")
+    .populate("subtype")
     .exec((err, data) => {
-      if (err){
+      if (err) {
         console.error(err);
         return res.status(404).json({ error: err });
-      } 
+      }
       return res.status(200).json(data);
     });
 };

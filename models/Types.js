@@ -7,13 +7,15 @@ const typeSchema = new mongoose.Schema({
   subtype: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref:'types'
+      ref: "types",
     },
   ],
-  rowmatrials:[{
+  rowmatrials: [
+    {
       type: mongoose.Schema.Types.ObjectId,
-      ref:'RowMaterials',
-  }]
+      ref: "RowMaterials",
+    },
+  ],
 });
 
 const Type = mongoose.model("types", typeSchema);
