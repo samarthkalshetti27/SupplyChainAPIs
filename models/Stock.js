@@ -1,21 +1,23 @@
 const mongoose = require("mongoose");
 
-const stockSchema = new mongoose.Schema({
-  id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "RowMaterials",
-    required: true,
+const stockSchema = new mongoose.Schema(
+  {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "RowMaterials",
+      required: true,
+    },
+    maxSize: {
+      type: Number,
+      required: true,
+    },
+    available: {
+      type: Number,
+      required: true,
+    },
   },
-  maxSize: {
-    type: Number,
-    required: true,
-  },
-  available: {
-    type: Number,
-    required: true,
-  },
-});
-
+  { timestamps: true }
+);
 
 const Stock = mongoose.model("Stock", stockSchema);
 

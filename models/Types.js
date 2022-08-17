@@ -16,7 +16,8 @@ const typeSchema = new mongoose.Schema({
       ref: "RowMaterials",
     },
   ],
-});
+},
+{ timestamps: true });
 
 const Type = mongoose.model("types", typeSchema);
 
