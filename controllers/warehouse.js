@@ -3,7 +3,7 @@ const Stock = require("../models/Stock");
 
 module.exports.updateMaxSize = async (req, res) => {
   Stock.findOneAndUpdate(
-    { id: req.body.id },
+    { id: req.body.id ,location:"row"},
     { maxSize: req.body.maxSize }
   ).exec((err, data) => {
     if (err) return res.status(404).json({ error: err });
@@ -15,8 +15,8 @@ module.exports.addStock = async (req, res) => {
   const ids = req.body.stock;
   ids.forEach((data) => {
     Stock.findOneAndUpdate(
-      { id: data.id },
-      { id: data.id, maxSize: data.maxSize, available: data.available },
+      { id: data.id ,location:"row"},
+      { id: data.id, maxSize: data.maxSize, available: data.available,lastUpdatedBy:data.lastUpdatedBy,location:"row" },
       {
         new: true,
         upsert: true,
@@ -29,10 +29,10 @@ module.exports.addStock = async (req, res) => {
 };
 
 module.exports.getStock = async (req, res) => {
-  Stock.find({})
+  Stock.find({location:"row"})
     .populate("id")
+    .populate("lastUpdatedBy","name")
     .exec((err, stock) => {
-      console.log(err);
       if (err) return res.status(404).json({ error: err });
       if (stock) return res.status(200).json(stock);
     });

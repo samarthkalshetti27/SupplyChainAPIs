@@ -49,7 +49,7 @@ module.exports.getResource = async (req, res) => {
 
 module.exports.getAll = async (req, res) => {
   Types.find({})
-    .populate("rowmatrials")
+    .populate("rowmaterials")
     .populate("subtype")
     .exec((err, data) => {
       if (err) {

@@ -32,6 +32,10 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Resource",
     },
+    createdBy:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Users"
+    }
   },
   { timestamps: true }
 );

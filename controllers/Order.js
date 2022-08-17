@@ -22,6 +22,7 @@ module.exports.getOrders = async (req, res) => {
     .populate("category")
     .populate("product.id")
     .populate("from")
+    .populate("createdBy","name")
     .exec((err, orders) => {
       if (err) console.log(err);
       if (orders) return res.status(200).json({ orders: orders });

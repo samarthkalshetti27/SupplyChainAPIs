@@ -10,7 +10,7 @@ const typeSchema = new mongoose.Schema({
       ref: "types",
     },
   ],
-  rowmatrials: [
+  rowmaterials: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "RowMaterials",

@@ -15,6 +15,15 @@ const stockSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    lastUpdatedBy:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"Users"
+    },
+    location:{
+      type:String,
+      required: true,
+      enum:["row","production"]
+    }
   },
   { timestamps: true }
 );
