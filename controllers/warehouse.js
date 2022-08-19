@@ -20,22 +20,47 @@ module.exports.addStock = async (req, res) => {
     if (data) console.log(data);
   });
 
+  // ids.forEach((data) => {
+  //   Stock.findOneAndUpdate(
+  //     { id: data.id, location: "row" },
+  //     {
+  //       id: data.id,
+  //       maxSize: data.maxSize,
+  //       available: data.available,
+  //       lastUpdatedBy: data.lastUpdatedBy,
+  //       location: "row",
+  //     },
+  //     {
+  //       new: true,
+  //       upsert: true,
+  //     }
+  //   ).exec((err, docs) => {
+  //     if (err) return res.status(404).json({ error: err });
+  //   });
+  // });
+
   ids.forEach((data) => {
-    Stock.findOneAndUpdate(
-      { id: data.id, location: "row" },
-      {
-        id: data.id,
-        maxSize: data.maxSize,
-        available: data.available,
-        lastUpdatedBy: data.lastUpdatedBy,
-        location: "row",
-      },
-      {
-        new: true,
-        upsert: true,
-      }
-    ).exec((err, docs) => {
+    Stock.findOne({ id: data.id, location: "row" }, (err, stock) => {
       if (err) return res.status(404).json({ error: err });
+      if (stock) {
+        stock.available += data.available;
+        stock.lastUpdatedBy = data.lastUpdatedBy;
+        stock.save();
+      } else {
+        Stock.create(
+          {
+            id: data.id,
+            available: data.available,
+            maxSize: data.maxSize,
+            lastUpdatedBy: data.lastUpdatedBy,
+            location: "row",
+          },
+          (err, stock) => {
+            if (err) return res.status(404).json({ error: err });
+            if (stock) console.log(stock);
+          }
+        );
+      }
     });
   });
   res.status(201).json({ success: "true" });

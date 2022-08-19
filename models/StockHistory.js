@@ -21,7 +21,7 @@ const stockHistorySchema = new mongoose.Schema({
       },
     },
   ],
-});
+},{timestamps: true});
 
 const StockHistory = mongoose.model("StockHistory", stockHistorySchema);
 
