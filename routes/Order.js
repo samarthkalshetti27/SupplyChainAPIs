@@ -5,4 +5,5 @@ router.post("/addorder", orderController.addOrder);
 router.get("/updateStatus", orderController.updateStatus);
 router.get("/getorders", orderController.getOrders);
 router.get("/acceptorder", orderController.acceptOrder);
+router.get("/getdetails",orderController.getDetails);
 module.exports = router;

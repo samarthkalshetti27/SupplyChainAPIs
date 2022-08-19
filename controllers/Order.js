@@ -39,6 +39,15 @@ module.exports.updateStatus = async (req, res) => {
   });
 };
 
+module.exports.getDetails = async (req, res) => {
+  const id = req.query.id;
+  Order.findById(id,(err, data)=>{
+    if(err) return res.status(404).json({ error: err });
+    if(data)
+      return res.status(200).json(data);
+  })
+}
+
 module.exports.getOrders = async (req, res) => {
   Order.find({})
     .populate("product.category", "name")
