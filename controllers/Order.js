@@ -19,7 +19,7 @@ module.exports.updateStatus = async (req, res) => {
 
 module.exports.getOrders = async (req, res) => {
   Order.find({})
-    .populate("category","name")
+    .populate("product.category","name")
     .populate("product.id")
     .populate("from")
     .populate("createdBy","name")

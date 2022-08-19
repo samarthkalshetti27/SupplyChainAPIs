@@ -14,15 +14,15 @@ const materialSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "types",
+    required: true,
+  },
 });
 
 const orderSchema = new mongoose.Schema(
   {
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "types",
-      required: true,
-    },
     product: [materialSchema],
     status: {
       type: Number,
@@ -32,10 +32,10 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Resource",
     },
-    createdBy:{
+    createdBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:"Users"
-    }
+      ref: "Users",
+    },
   },
   { timestamps: true }
 );
