@@ -43,14 +43,14 @@ module.exports.addStock = async (req, res) => {
     Stock.findOne({ id: data.id, location: "row" }, (err, stock) => {
       if (err) return res.status(404).json({ error: err });
       if (stock) {
-        stock.available += data.available;
+        stock.available += data.qty;
         stock.lastUpdatedBy = data.lastUpdatedBy;
         stock.save();
       } else {
         Stock.create(
           {
             id: data.id,
-            available: data.available,
+            available: data.qty,
             maxSize: data.maxSize,
             lastUpdatedBy: data.lastUpdatedBy,
             location: "row",
