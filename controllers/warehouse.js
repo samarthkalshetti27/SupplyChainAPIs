@@ -14,10 +14,9 @@ module.exports.updateMaxSize = async (req, res) => {
 module.exports.addStock = async (req, res) => {
   const ids = req.body.stock;
   const history = req.body.addStockHistory;
-  console.log(history);
+  history.location = "row";
   StockHistory.create(history, (err, data) => {
     if (err) return res.status(500).json({ error: err });
-    if (data) console.log(data);
   });
 
   // ids.forEach((data) => {
@@ -57,7 +56,6 @@ module.exports.addStock = async (req, res) => {
           },
           (err, stock) => {
             if (err) return res.status(404).json({ error: err });
-            if (stock) console.log(stock);
           }
         );
       }

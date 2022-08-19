@@ -5,6 +5,10 @@ const stockHistorySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Users",
   },
+  location: {
+    type:String,
+    enum:["row","production"]
+  },
   materials: [
     {
       id: {
