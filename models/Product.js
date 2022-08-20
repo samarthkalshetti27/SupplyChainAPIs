@@ -12,7 +12,22 @@ const materialSchema = new mongoose.Schema({
   },
 });
 
-
 const productSchema = new mongoose.Schema({
-    
-})
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "types",
+    required: true,
+  },
+  qty:{
+    type:Number,
+    required: true
+  },
+  rawmaterial: [materialSchema],
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Users",
+  },
+});
+
+const Product = mongoose.model("Product",productSchema);
+module.exports = Product;
