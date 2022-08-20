@@ -59,18 +59,32 @@ module.exports.makeProduct = async (req, res) => {
         });
       });
 
-      ProductStock.findOne({id:req.body.category},(err,stock) => {
-        if(err) return res.status(404).json({ error:err})
-        if(stock){
-          stock.available+=req.body.qty;
+      ProductStock.findOne({ id: req.body.category }, (err, stock) => {
+        if (err) return res.status(404).json({ error: err });
+        if (stock) {
+          stock.available += req.body.qty;
           stock.save();
-        }else{
-          ProductStock.create({id:req.body.category,available:req.body.qty},(err,data) => {
-            if(err) return res.status(404).json({ error:err})           
-          })
+        } else {
+          ProductStock.create(
+            { id: req.body.category, available: req.body.qty },
+            (err, data) => {
+              if (err) return res.status(404).json({ error: err });
+            }
+          );
         }
-      })
+      });
     }
   });
   return res.status(200).json({ success: "Success" });
+};
+
+module.exports.getProductStock = async (req, res) => {
+  ProductStock.find()
+    .populate("id", "name")
+    .exec((err, productStock) => {
+      if (err) return res.status(404).json({ error: err });
+      if (productStock) {
+        return res.status(200).json(productStock);
+      }
+    });
 };
