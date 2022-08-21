@@ -26,10 +26,13 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    nextOrderData: {
+    nextOrderDate: {
       type: Date,
       required: true,
     },
+    days:{
+      type:Number
+    }
   },
   { timestamps: true }
 );
