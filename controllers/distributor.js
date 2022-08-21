@@ -61,16 +61,26 @@ module.exports.approveRegularOrder = async (req, res) => {
   RegularOrder.findById(id, (err, order) => {
     if (err) return res.status(404).json({ error: err });
     if (order) {
-        var temp={
-           orderBy:order.orderBy,
-           products:order.products, 
-        }
+      var temp = {
+        orderBy: order.orderBy,
+        products: order.products,
+      };
       NormalOrder.create(temp, (err, data) => {
-        if (err) console.log(err);;
+        if (err) console.log(err);
       });
       order.nextOrderDate = date;
       order.save();
     }
   });
   return res.status(201).json({ success: "Success" });
+};
+
+module.exports.getTransactions = async (req, res) => {
+  const id = req.query.id;
+  NormalOrder.find({ orderBy: id })
+    .populate("products")
+    .exec((err, orders) => {
+      if (err) return res.status(404).json({ error: err });
+      if (orders) return res.status(200).json({ orders });
+    });
 };
