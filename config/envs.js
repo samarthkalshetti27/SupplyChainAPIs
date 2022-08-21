@@ -1,6 +1,4 @@
-const dotenv= require("dotenv")
-dotenv.config(); 
+const dotenv = require("dotenv");
+dotenv.config();
 
-module.exports={
-    TOKEN_SECRET
-} = process.env;
+module.exports = { TOKEN_SECRET, URL } = process.env;
