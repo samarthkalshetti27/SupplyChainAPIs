@@ -22,6 +22,7 @@ module.exports.addStock = async (req, res) => {
         maxSize: data.maxSize,
         available: data.available,
         lastUpdatedBy: data.lastUpdatedBy,
+        price: data.price,
         location: "production",
       },
       {
@@ -63,10 +64,11 @@ module.exports.makeProduct = async (req, res) => {
         if (err) return res.status(404).json({ error: err });
         if (stock) {
           stock.available += req.body.qty;
+          stock.price=req.body.price;
           stock.save();
         } else {
           ProductStock.create(
-            { id: req.body.category, available: req.body.qty },
+            { id: req.body.category, available: req.body.qty,price: req.body.price},
             (err, data) => {
               if (err) return res.status(404).json({ error: err });
             }

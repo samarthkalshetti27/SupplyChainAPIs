@@ -8,5 +8,6 @@ router.use("/admin", require("./admin"));
 router.use("/warehouse", require("./warehouse"))
 router.use("/order",require("./Order"))
 router.use('/production',require("./production"))
+router.use('/distributor',require("./distributor"))
 
 module.exports = router;

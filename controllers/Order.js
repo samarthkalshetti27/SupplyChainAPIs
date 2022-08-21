@@ -5,7 +5,7 @@ const Stock = require("../models/Stock");
 module.exports.addOrder = async (req, res) => {
   Order.create(req.body, (err, data) => {
     if (err) return res.status(404).json({ error: err });
-    if (data) return res.status(201).json({ data: data });
+    if (data) return res.status(201).json({success:"success" });
   });
 };
 
@@ -54,7 +54,6 @@ module.exports.getOrders = async (req, res) => {
   Order.find({})
     .populate("product.category", "name")
     .populate("product.id")
-    .populate("from")
     .populate("createdBy", "name")
     .exec((err, orders) => {
       if (err) console.log(err);

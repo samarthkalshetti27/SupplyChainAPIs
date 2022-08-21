@@ -18,9 +18,13 @@ const productSchema = new mongoose.Schema({
     ref: "types",
     required: true,
   },
-  qty:{
-    type:Number,
-    required: true
+  qty: {
+    type: Number,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
   },
   rawmaterial: [materialSchema],
   createdBy: {
@@ -29,5 +33,5 @@ const productSchema = new mongoose.Schema({
   },
 });
 
-const Product = mongoose.model("Product",productSchema);
+const Product = mongoose.model("Product", productSchema);
 module.exports = Product;
