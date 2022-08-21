@@ -76,11 +76,10 @@ module.exports.getStock = async (req, res) => {
 
 module.exports.getStockHistory = async (req, res) => {
   const id = req.query.id;
-  let q={ location: "row"}
-  if(id){
-    q={$and:[{location: "row"},{addedBy:id}]}
+  let q = { location: "row" };
+  if (id) {
+    q = { $and: [{ location: "row" }, { addedBy: id }] };
   }
-
   StockHistory.find(q)
     .populate("addedBy", "name")
     .populate("materials.id", "name")
