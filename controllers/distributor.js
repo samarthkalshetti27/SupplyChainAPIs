@@ -57,7 +57,7 @@ module.exports.approveNormalOrder = (req, res) => {
 
 module.exports.approveRegularOrder = async (req, res) => {
   const id = req.query.id;
-  const data = req.query.date;
+  const date = req.query.date;
   RegularOrder.findById(id, (err, order) => {
     if (err) return res.status(404).json({ error: err });
     if (order) {
@@ -68,7 +68,7 @@ module.exports.approveRegularOrder = async (req, res) => {
       NormalOrder.create(temp, (err, data) => {
         if (err) console.log(err);;
       });
-      order.nextOrderData = data;
+      order.nextOrderDate = date;
       order.save();
     }
   });
