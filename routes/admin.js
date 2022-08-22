@@ -20,4 +20,5 @@ router.get("/getresource", adminController.getResource);
 router.get('/stockhistory',warehouseController.getStockHistory)
 router.get('/producthistory',productionController.getProductHistory)
 
+
 module.exports = router;
