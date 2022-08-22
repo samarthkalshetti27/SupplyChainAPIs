@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Users",
   },
-});
+},{timestamps: true});
 
 const Product = mongoose.model("Product", productSchema);
 module.exports = Product;

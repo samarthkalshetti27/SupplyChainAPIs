@@ -64,11 +64,15 @@ module.exports.makeProduct = async (req, res) => {
         if (err) return res.status(404).json({ error: err });
         if (stock) {
           stock.available += req.body.qty;
-          stock.price=req.body.price;
+          stock.price = req.body.price;
           stock.save();
         } else {
           ProductStock.create(
-            { id: req.body.category, available: req.body.qty,price: req.body.price},
+            {
+              id: req.body.category,
+              available: req.body.qty,
+              price: req.body.price,
+            },
             (err, data) => {
               if (err) return res.status(404).json({ error: err });
             }
@@ -89,4 +93,14 @@ module.exports.getProductStock = async (req, res) => {
         return res.status(200).json(productStock);
       }
     });
+};
+
+module.exports.getProductHistory = async (req, res) => {
+  const id = req.query.id;
+  let q = {};
+  if (id) q.__id = id;
+  Product.find(q, (err, products) => {
+    if (err) return res.status(404).json({ error: err });
+    if (products) return res.status(200).json(products);
+  });
 };
