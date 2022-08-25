@@ -78,7 +78,7 @@ module.exports.approveRegularOrder = async (req, res) => {
 module.exports.getTransactions = async (req, res) => {
   const id = req.query.id;
   NormalOrder.find({ orderBy: id })
-    .populate("products.id","name")
+    .populate("products.id", "name")
     .exec((err, orders) => {
       if (err) return res.status(404).json({ error: err });
       if (orders) return res.status(200).json({ orders });

@@ -1,8 +1,9 @@
-const express= require("express")
-const userController= require("../controllers/user");
+const express = require("express");
+const userController = require("../controllers/user");
 const router = express.Router();
-
-router.post('/login',userController.login);
-
-
-module.exports =router;
+const fileStorage = require("../middleware/fileStorage");
+const farmerController = require("../controllers/farmer");
+router.post("/login", userController.login);
+router.post("/addpost", fileStorage.array("images"), farmerController.addPost);
+router.get("/getpost", farmerController.getPost);
+module.exports = router;
