@@ -9,6 +9,10 @@ const postSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "RowMaterials",
   },
+  farmerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Users",
+  },
   qty: {
     type: Number,
   },

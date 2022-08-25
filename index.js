@@ -9,7 +9,7 @@ app.use(
     origin: "*",
   })
 );
-app.use("/img", express.static(path.join(__dirname, 'uploads')));
+app.use("/img", express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
 
 app.use("/", require("./routes"));

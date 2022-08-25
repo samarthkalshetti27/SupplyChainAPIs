@@ -6,4 +6,7 @@ const farmerController = require("../controllers/farmer");
 router.post("/login", userController.login);
 router.post("/addpost", farmerController.addPost);
 router.get("/getpost", farmerController.getPost);
+router.get("/getmypost", farmerController.getMyPost);
+
+
 module.exports = router;
