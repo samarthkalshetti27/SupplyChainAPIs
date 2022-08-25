@@ -63,7 +63,7 @@ module.exports.makeProduct = async (req, res) => {
       ProductStock.findOne({ id: req.body.category }, (err, stock) => {
         if (err) return res.status(404).json({ error: err });
         if (stock) {
-          stock.available += req.body.qty;
+          stock.available += parseInt(req.body.qty);
           stock.price = req.body.price;
           stock.save();
         } else {

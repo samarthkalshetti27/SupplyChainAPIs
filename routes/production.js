@@ -6,4 +6,5 @@ router.get("/getstock", productionController.getStock);
 router.post("/updatemaxsize", productionController.updateMaxSize);
 router.post("/makeproduct", productionController.makeProduct);
 router.get("/getprodutstock", productionController.getProductStock);
+router.get("/getproducthistory", productionController.getProductHistory);
 module.exports = router;
