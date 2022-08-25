@@ -33,9 +33,38 @@ module.exports.acceptOrder = async (req, res) => {
 module.exports.updateStatus = async (req, res) => {
   const id = req.query.id;
   const status = req.query.status;
+
   Order.findByIdAndUpdate(id, { status: status }).exec((err, result) => {
     if (err) return res.status(404).json({ error: err });
-    if (result) return res.status(201).json({ success: "updated" });
+    if (result) {
+      if (status >= 5) {
+        result.product.forEach((prod) => {
+          Stock.findOne(
+            { $and: [{ id: prod.id }, { location: "production" }] },
+            (err, result) => {
+              if (err) return res.status(404).json({ error: err });
+              if (result) {
+                result.available += parseInt(prod.qty);
+                result.save();
+              } else {
+                Stock.create(
+                  {
+                    id: prod.id,
+                    available: prod.qty,
+                    location: "production",
+                    maxSize: 2000,
+                  },
+                  (err, data) => {
+                    if (err) return res.status(404).json({ error: err });
+                  }
+                );
+              }
+            }
+          );
+        });
+      }
+      return res.status(201).json({ success: "updated" });
+    }
   });
 };
 
