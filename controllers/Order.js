@@ -5,7 +5,7 @@ const Stock = require("../models/Stock");
 module.exports.addOrder = async (req, res) => {
   Order.create(req.body, (err, data) => {
     if (err) return res.status(404).json({ error: err });
-    if (data) return res.status(201).json({success:"success" });
+    if (data) return res.status(201).json({ success: "success" });
   });
 };
 
@@ -42,8 +42,8 @@ module.exports.updateStatus = async (req, res) => {
 module.exports.getDetails = async (req, res) => {
   const id = req.query.id;
   Order.findById(id)
-    .populate("product.id","name")
-    .populate("product.category","name")
+    .populate("product.id", "name")
+    .populate("product.category", "name")
     .exec((err, data) => {
       if (err) return res.status(404).json({ error: err });
       if (data) return res.status(200).json(data);
@@ -59,4 +59,11 @@ module.exports.getOrders = async (req, res) => {
       if (err) console.log(err);
       if (orders) return res.status(200).json({ orders: orders });
     });
+};
+
+module.exports.getOrdersByUser = async (req, res) => {
+  Order.find({ createdBy: req.query.id }).exec((err, orders) => {
+    if (err) return res.status(404).json({ error: err });
+    if (orders) return res.status(200).json({ orders });
+  });
 };

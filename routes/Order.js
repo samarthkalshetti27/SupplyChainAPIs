@@ -6,4 +6,5 @@ router.get("/updateStatus", orderController.updateStatus);
 router.get("/getorders", orderController.getOrders);
 router.get("/acceptorder", orderController.acceptOrder);
 router.get("/getdetails",orderController.getDetails);
+router.get("/getdetailsbyid",orderController.getOrdersByUser);
 module.exports = router;
