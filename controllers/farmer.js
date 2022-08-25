@@ -2,20 +2,20 @@ const express = require("express");
 const farmerPost = require("../models/farmerPost");
 const { APP_URL } = require("../config/envs");
 module.exports.addPost = async (req, res) => {
-  let arr = [];
-  req.files.forEach((file) => {
-    arr.push(file.filename);
-  });
+//   let arr = [];
+//   req.files.forEach((file) => {
+//     arr.push(file.filename);
+//   });
 
-  let data = {
-    category: req.body.category,
-    rawmaterial: req.body.rawmaterial,
-    phoneNo: req.body.phoneNo,
-    qty: req.body.qty,
-    images: arr,
-  };
+//   let data = {
+//     category: req.body.category,
+//     rawmaterial: req.body.rawmaterial,
+//     phoneNo: req.body.phoneNo,
+//     qty: req.body.qty,
+//     images: arr,
+//   };
 
-  farmerPost.create(data, (err, post) => {
+  farmerPost.create(req.body, (err, post) => {
     if (err) return res.status(404).json({ error: err });
     if (post) return res.status(201).json({ id: post.id });
   });
