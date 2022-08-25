@@ -13,10 +13,7 @@ module.exports.login = async (req, res) => {
     )
       return res.status(404).json({ error: "Invalid Credentials" });
     if (req.body.password == user.password) {
-      const token = jwt.sign({ user }, process.env.TOKEN_SECRET, {
-        expiresIn: "10h",
-      });
-      return res.status(200).json({ token });
+      return res.status(200).json({ user });
     }
   });
 };
