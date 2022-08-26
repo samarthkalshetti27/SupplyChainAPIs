@@ -1,7 +1,7 @@
 const express = require("express");
 const farmerPost = require("../models/farmerPost");
 const { APP_URL } = require("../config/envs");
-const Storage = require("../models/Stock");
+const Stock = require("../models/Stock");
 module.exports.addPost = async (req, res) => {
   //   let arr = [];
   //   req.files.forEach((file) => {
@@ -58,30 +58,60 @@ module.exports.book = async (req, res) => {
 };
 
 module.exports.collect = async (req, res) => {
-  const id = req.body.id;
-  farmerPost.findById(id, (err, post) => {
+  const id = req.query.id;
+
+  farmerPost.findOneAndUpdate({ _id: id }, {status: 2 }, (err, post) => {
     if (err) return res.status(404).json({ error: err });
     if (post) {
-      post.status = 2;
-      post.save();
       Stock.findById(post.rawmaterial, (err, stock) => {
         if (err) return res.status(404).json({ error: err });
         if (stock) {
           stock.available += parseInt(post.qty);
           stock.save();
         } else {
-          Stock.create({
-            id: post.rawmaterial,
-            maxSize: 2000,
-            avilable: post.qty,
-            location: "row",
-            lastUpdatedBy: post.bookedBy,
-          },(err,data) => {
-            if(err) return res.status(404).json({ error: err })
-          });
+          Stock.create(
+            {
+              id: post.rawmaterial,
+              maxSize: 2000,
+              available: post.qty,
+              location: "row",
+              lastUpdatedBy: post.bookedBy,
+            },
+            (err, data) => {
+              if (err) return res.status(404).json({ error: err });
+            }
+          );
         }
       });
     }
   });
+
+  // farmerPost.find({_id:id}, (err, post) => {
+  //   if (err) return res.status(404).json({ error: err });
+  //   if (post) {
+
+  //     Stock.findById(post.rawmaterial, (err, stock) => {
+  //       if (err) console.log(err)//return res.status(404).json({ error: err });
+  //       if (stock) {
+
+  //         stock.available += parseInt(post.qty);
+  //         stock.save();
+  //       } else {
+  //         Stock.create({
+  //           id: post.rawmaterial,
+  //           maxSize: 2000,
+  //           avilable: post.qty,
+  //           location: "row",
+  //           lastUpdatedBy: post.bookedBy,
+  //         },(err,data) => {
+  //           if(err) return res.status(404).json({ error: err })
+  //         });
+  //       }
+  //     });
+  //     post.status = 2;
+  //     post.save();
+
+  //   }
+  // });
   return res.status(201).json({ success: "Success" });
 };
