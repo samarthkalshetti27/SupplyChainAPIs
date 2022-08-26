@@ -59,8 +59,7 @@ module.exports.book = async (req, res) => {
 
 module.exports.collect = async (req, res) => {
   const id = req.query.id;
-
-  farmerPost.findOneAndUpdate({ _id: id }, {status: 2 }, (err, post) => {
+  farmerPost.findOneAndUpdate({ _id: id }, { status: 2 }, (err, post) => {
     if (err) return res.status(404).json({ error: err });
     if (post) {
       Stock.findById(post.rawmaterial, (err, stock) => {
@@ -68,7 +67,8 @@ module.exports.collect = async (req, res) => {
         if (stock) {
           stock.available += parseInt(post.qty);
           stock.save();
-        } else {
+        }
+        if (!stock) {
           Stock.create(
             {
               id: post.rawmaterial,
@@ -85,33 +85,5 @@ module.exports.collect = async (req, res) => {
       });
     }
   });
-
-  // farmerPost.find({_id:id}, (err, post) => {
-  //   if (err) return res.status(404).json({ error: err });
-  //   if (post) {
-
-  //     Stock.findById(post.rawmaterial, (err, stock) => {
-  //       if (err) console.log(err)//return res.status(404).json({ error: err });
-  //       if (stock) {
-
-  //         stock.available += parseInt(post.qty);
-  //         stock.save();
-  //       } else {
-  //         Stock.create({
-  //           id: post.rawmaterial,
-  //           maxSize: 2000,
-  //           avilable: post.qty,
-  //           location: "row",
-  //           lastUpdatedBy: post.bookedBy,
-  //         },(err,data) => {
-  //           if(err) return res.status(404).json({ error: err })
-  //         });
-  //       }
-  //     });
-  //     post.status = 2;
-  //     post.save();
-
-  //   }
-  // });
   return res.status(201).json({ success: "Success" });
 };
